@@ -2,169 +2,163 @@
 
 ## Repository Overview
 
-This repository contains the Double / Buddy work for CS509 Assignment 3.
+This repository contains the Buddy/Double work for CS509 Assignment 3.
 
-### Buddy Members
-
-| Entry Number | Role |
-|---|---|
-| CSM1016 | Buddy Member |
-| CSM1043 | Buddy Member |
-
-### Assignment 3 Buddy Algorithms
+The Assignment 3 Buddy algorithms implemented in this repository are:
 
 - Gradient Descent
 - Maxflow-Mincut
 
-The Minimum Spanning Tree (MST) task, consisting of Kruskal's and Prim's algorithms, is an individual task in Assignment 3 and is not part of this Buddy implementation.
+MST (Kruskal and Prim) is an individual task in the Assignment 3 specification and is not part of this Buddy implementation.
 
 ---
 
-## Assignment Mode
+## Buddy Details
 
-**Double / Buddy**
+| Field | Information |
+|---|---|
+| Student | Harshita Mahor |
+| Entry Number | 2026CSM1016 |
+| Buddy | Sejal |
+| Buddy Entry Number | 2026CSM1043 |
+| Assignment | CS509 Assignment 3 |
+| Mode | Double / Buddy |
+| Language | C++ |
+| Standard | C++17 |
+| Compiler | g++ |
 
-The assignment is completed by a pair of students and stored in one shared repository.
+---
+
+## Important CSR Note
+
+The Assignment 3 specification requires graph algorithms to use CSR and states that the CSR conversion function from a previous assignment should be called rather than copied.
+
+For this repository, a fresh CSR implementation has been created because this Buddy/repository setup is new.
+
+This is a deliberate project decision and should be confirmed with the TA/instructor before final submission if the "do not copy previous CSR" rule is interpreted strictly.
+
+Gradient Descent does not use CSR.
 
 ---
 
 ## Language and Environment
 
-- Programming Language: C++
-- C++ Standard: C++17
+- Language: C++
+- Standard: C++17
 - Compiler: g++
-- Compilation Flag: `-O2`
-- Timing Unit: milliseconds (ms)
+- Recommended optimization flag for timing: `-O2`
 
 ---
 
 ## Directory Structure
 
-```text
-CS509_CSM1016_CSM1043/
-|
-|-- README.md
-|
-|-- common_wrapper/
-|   `-- wrapper.cpp
-|
-`-- assignment_03/
+    CS509_CSM1016_CSM1043/
     |
-    |-- src/
-    |   |-- csr.h
-    |   |-- csr.cpp
-    |   |-- gradient_descent.h
-    |   |-- gradient_descent.cpp
-    |   |-- maxflow.h
-    |   `-- maxflow.cpp
+    |-- README.md
     |
-    |-- driver/
-    |   `-- assignment3_driver.cpp
+    |-- common_wrapper/
+    |   `-- wrapper.cpp
     |
-    `-- tests/
-        |-- gd_01.txt
-        |-- gd_02.txt
-        |-- gd_03.txt
-        |-- gd_04.txt
-        |-- gd_05.txt
-        |-- maxflow_10.txt
-        |-- maxflow_100.txt
-        |-- maxflow_1000.txt
-        |-- maxflow_10000.txt
-        `-- maxflow_50000.txt
-```
-
-### Folder Purpose
-
-- `common_wrapper/` - Repository-level common wrapper.
-- `assignment_03/src/` - Core Assignment 3 algorithm and CSR implementation files.
-- `assignment_03/driver/` - Dedicated Assignment 3 driver.
-- `assignment_03/tests/` - Assignment 3 input test files.
-- `README.md` - Complete documentation, execution instructions, correctness information, and result tables.
+    `-- assignment_03/
+        |
+        |-- src/
+        |   |-- csr.h
+        |   |-- csr.cpp
+        |   |-- gradient_descent.h
+        |   |-- gradient_descent.cpp
+        |   |-- maxflow.h
+        |   `-- maxflow.cpp
+        |
+        |-- driver/
+        |   `-- assignment3_driver.cpp
+        |
+        `-- tests/
+            |-- gd_01.txt
+            |-- gd_02.txt
+            |-- gd_03.txt
+            |-- gd_04.txt
+            |-- gd_05.txt
+            |-- maxflow_10.txt
+            |-- maxflow_100.txt
+            |-- maxflow_1000.txt
+            |-- maxflow_10000.txt
+            `-- maxflow_50000.txt
 
 ---
 
-# Assignment 3 - Buddy Work
+# Assignment 3 - Buddy Mode
 
-## Objective
+## Gradient Descent
 
-The Buddy portion of Assignment 3 consists of:
+A generic one-variable polynomial is represented as:
 
-1. Gradient Descent
-2. Maxflow-Mincut
+    f(x) = c0 + c1*x + c2*x^2 + ... + cd*x^d
 
-The driver reads and validates the input file, prepares the required data structure, calls the selected algorithm, and prints the final result and algorithm execution time.
-
-For graph algorithms, the input adjacency list is converted to CSR before the algorithm is called.
-
----
-
-# 1. Gradient Descent
-
-## Algorithm / Approach
-
-Gradient Descent is implemented for a generic one-variable polynomial:
-
-```text
-f(x) = c0 + c1*x + c2*x^2 + ... + cd*x^d
-```
-
-The derivative is:
-
-```text
-f'(x) = c1 + 2*c2*x + 3*c3*x^2 + ... + d*cd*x^(d-1)
-```
+The derivative is evaluated from the coefficient array.
 
 The update rule is:
 
-```text
-x_new = x - learning_rate * f'(x)
-```
+    x_new = x - learning_rate * f'(x)
 
 The algorithm stops when:
 
-```text
-|f'(x)| <= tolerance
-```
+    |f'(x)| <= tolerance
 
-or when the maximum number of iterations has been executed.
+or when the maximum iteration limit is reached.
 
-The same implementation supports all required polynomial degrees:
+The same implementation supports polynomial degrees:
 
-- Degree 2
-- Degree 4
-- Degree 6
-- Degree 8
-- Degree 10
-
-The five objective functions are not implemented as separate hard-coded algorithms.
+- 2
+- 4
+- 6
+- 8
+- 10
 
 ---
 
-## Gradient Descent CSR Requirement
+## Maxflow-Mincut
 
-Gradient Descent does not use CSR.
+The input graph is a directed capacity adjacency list.
 
-The polynomial coefficients and optimization parameters are read directly from the input file.
+The driver converts the graph to CSR before timing begins.
 
----
+Dinic's algorithm is used to compute the maximum flow.
 
-## Gradient Descent Input Format
+The final residual graph is used to find the vertices reachable from the source. These vertices form the source side of the minimum cut.
 
-```text
-DEGREE d
-COEFFICIENTS c0 c1 c2 ... cd
-INITIAL_X x0
-LEARNING_RATE alpha
-TOLERANCE epsilon
-MAX_ITERATIONS n
-```
-
-The `COEFFICIENTS` line contains exactly `d + 1` floating-point values in ascending power order.
+Original CSR edges crossing from the source side to the sink side are reported as cut edges.
 
 ---
 
-## Required Gradient Descent Tests
+# Input Formats
+
+## Gradient Descent
+
+    DEGREE d
+    COEFFICIENTS c0 c1 c2 ... cd
+    INITIAL_X x0
+    LEARNING_RATE alpha
+    TOLERANCE epsilon
+    MAX_ITERATIONS n
+
+---
+
+## Maxflow-Mincut
+
+    V E
+    u0 degree neighbor1 capacity1 neighbor2 capacity2 ...
+    ...
+    u(V-1) degree ...
+    SOURCE s
+    SINK t
+
+Only outgoing edges are listed.
+
+Reverse residual edges are created internally by the Maxflow-Mincut implementation.
+
+---
+
+# Required Gradient Descent Tests
 
 | File | Degree | Initial x | Learning Rate | Tolerance | Max Iterations | Expected x* |
 |---|---:|---:|---:|---:|---:|---:|
@@ -176,85 +170,7 @@ The `COEFFICIENTS` line contains exactly `d + 1` floating-point values in ascend
 
 ---
 
-# 2. Maxflow-Mincut
-
-## Algorithm / Approach
-
-Maxflow-Mincut operates on a directed graph with positive edge capacities.
-
-The input graph is initially represented as an adjacency list.
-
-Before the algorithm is called:
-
-```text
-Adjacency List -> CSR
-```
-
-The CSR conversion is preprocessing and is excluded from the reported algorithm execution time.
-
-Dinic's algorithm is used to compute the maximum flow.
-
-After the maximum flow is computed, the final residual graph is used to determine the vertices reachable from the source.
-
-These vertices form the source side of the minimum cut.
-
-The original CSR edges crossing from the source side to the sink side form the reported cut edges.
-
-Correctness is checked using:
-
-```text
-Maximum Flow = Minimum Cut Capacity
-```
-
----
-
-## CSR Representation
-
-The graph is converted into Compressed Sparse Row (CSR) format before the Maxflow-Mincut algorithm is timed.
-
-The CSR representation consists of:
-
-```text
-row_ptr
-col_idx
-values
-```
-
-where:
-
-- `row_ptr` stores the beginning and ending positions of each vertex's adjacency range.
-- `col_idx` stores neighbouring vertex IDs.
-- `values` stores edge capacities.
-
-The adjacency-list-to-CSR conversion is completed before the timer starts.
-
----
-
-## Maxflow-Mincut Input Format
-
-```text
-V E
-u0 degree neighbor1 capacity1 neighbor2 capacity2 ...
-u1 degree neighbor1 capacity1 neighbor2 capacity2 ...
-...
-u(V-1) degree ...
-SOURCE s
-SINK t
-```
-
-Where:
-
-- `V` = number of vertices.
-- `E` = number of directed capacity edges.
-- Each neighbour is followed by the capacity of that directed edge.
-- Only outgoing edges are listed in the input.
-- Reverse residual edges are created internally.
-- Source and sink must be valid and different.
-- Required capacities are positive integers.
-
----
-
-## Required Maxflow-Mincut Tests
+# Required Maxflow Tests
 
 | File | Vertices | Edges | Graph Type |
 |---|---:|---:|---|
@@ -268,36 +184,11 @@ The Assignment 3 specification also lists `maxflow_100000.txt` as optional.
 
 ---
 
-# Source Files
-
-| File | Purpose |
-|---|---|
-| `assignment_03/src/csr.h` | CSR data structure and function declarations |
-| `assignment_03/src/csr.cpp` | CSR construction and related implementation |
-| `assignment_03/src/gradient_descent.h` | Gradient Descent declarations |
-| `assignment_03/src/gradient_descent.cpp` | Gradient Descent implementation |
-| `assignment_03/src/maxflow.h` | Maxflow-Mincut declarations |
-| `assignment_03/src/maxflow.cpp` | Dinic's Maxflow-Mincut implementation |
-| `assignment_03/driver/assignment3_driver.cpp` | Assignment 3 input handling, execution and timing |
-| `common_wrapper/wrapper.cpp` | Common repository-level wrapper |
-
----
-
 # Compilation
 
-## Assignment 3
+Compile Assignment 3 from the repository root:
 
-From the repository root:
-
-```bash
-g++ -std=c++17 -O2 assignment_03/src/csr.cpp assignment_03/src/gradient_descent.cpp assignment_03/src/maxflow.cpp assignment_03/driver/assignment3_driver.cpp -o assignment_03.exe
-```
-
-## Common Wrapper
-
-```bash
-g++ -std=c++17 -O2 common_wrapper/wrapper.cpp -o wrapper.exe
-```
+    g++ -std=c++17 -O2 assignment_03/src/csr.cpp assignment_03/src/gradient_descent.cpp assignment_03/src/maxflow.cpp assignment_03/driver/assignment3_driver.cpp -o assignment_03.exe
 
 ---
 
@@ -305,165 +196,153 @@ g++ -std=c++17 -O2 common_wrapper/wrapper.cpp -o wrapper.exe
 
 ## Gradient Descent
 
-```bash
-assignment_03.exe gd assignment_03/tests/gd_01.txt
-```
+    .\assignment_03.exe gd assignment_03/tests/gd_01.txt
+
+    .\assignment_03.exe gd assignment_03/tests/gd_02.txt
+
+    .\assignment_03.exe gd assignment_03/tests/gd_03.txt
+
+    .\assignment_03.exe gd assignment_03/tests/gd_04.txt
+
+    .\assignment_03.exe gd assignment_03/tests/gd_05.txt
+
+---
 
 ## Maxflow-Mincut
 
-```bash
-assignment_03.exe maxflow assignment_03/tests/maxflow_10.txt
-```
+    .\assignment_03.exe maxflow assignment_03/tests/maxflow_10.txt
+
+    .\assignment_03.exe maxflow assignment_03/tests/maxflow_100.txt
+
+    .\assignment_03.exe maxflow assignment_03/tests/maxflow_1000.txt
+
+    .\assignment_03.exe maxflow assignment_03/tests/maxflow_10000.txt
+
+    .\assignment_03.exe maxflow assignment_03/tests/maxflow_50000.txt
 
 ---
 
 # Common Wrapper
 
-Run the common wrapper using:
+The repository contains a common wrapper:
 
-```bash
-wrapper.exe
-```
+    common_wrapper/wrapper.cpp
 
-The wrapper provides options to:
+The wrapper can:
 
-1. Compile Assignment 3.
-2. Run Gradient Descent on one test.
-3. Run all Gradient Descent tests.
-4. Run Maxflow-Mincut on one test.
-5. Run all Maxflow-Mincut tests.
-6. Compile and run all Assignment 3 tests.
-0. Exit.
+- compile Assignment 3
+- run one Gradient Descent test
+- run all Gradient Descent tests
+- run one Maxflow-Mincut test
+- run all Maxflow-Mincut tests
+- compile and run all Assignment 3 tests
 
-The common wrapper invokes the dedicated Assignment 3 driver.
+Compile the wrapper using:
 
----
+    g++ -std=c++17 -O2 common_wrapper/wrapper.cpp -o wrapper.exe
 
-# Input Validation
+Run:
 
-## Gradient Descent
+    .\wrapper.exe
 
-The implementation checks for invalid input including:
+The common wrapper is maintained separately from the Assignment 3 implementation.
 
-- Invalid polynomial degree.
-- Incorrect number of coefficients.
-- Non-positive learning rate.
-- Non-positive tolerance.
-- Non-positive maximum iteration count.
-- Invalid or missing input files.
-
-## Maxflow-Mincut
-
-The implementation checks for invalid input including:
-
-- Invalid source vertex.
-- Invalid sink vertex.
-- Source equal to sink.
-- Negative capacities.
-- Invalid or missing input files.
+Future assignments can extend the common wrapper without modifying the Assignment 3 source files or driver.
 
 ---
 
 # Timing Methodology
 
-Only the execution time of the algorithm itself is reported.
+Only algorithm execution time is measured.
 
-The timer starts immediately before the algorithm call and stops immediately after the algorithm finishes.
+The following are outside the timed region:
 
-The following operations are outside the timed region:
+- file reading
+- input parsing
+- input validation
+- adjacency-list construction
+- CSR conversion
+- output formatting
+- result printing
+- file writing
 
-- File reading.
-- Input parsing.
-- Input validation.
-- Adjacency-list construction.
-- Adjacency-list-to-CSR conversion.
-- Output formatting.
-- Output printing.
-- File writing.
+For Maxflow-Mincut:
 
-For Maxflow-Mincut, the CSR representation is already prepared before the timer starts.
+    Adjacency List
+          |
+          v
+    CSR Conversion
+          |
+          v
+    Timer Starts
+          |
+          v
+    Dinic's Algorithm
+          |
+          v
+    Timer Stops
 
-For Maxflow-Mincut, initialization of the residual network from the prepared CSR is part of the timed algorithm execution.
+CSR conversion is therefore excluded from the reported Maxflow-Mincut execution time.
 
-Minimum-cut extraction from the final residual graph is also part of the measured Maxflow-Mincut algorithm section.
-
-### Compiler
-
-```text
-g++
-```
-
-### Compilation Flags
-
-```text
--std=c++17 -O2
-```
-
-### Timing Unit
-
-```text
-milliseconds (ms)
-```
-
-### Timing Method
-
-The algorithm execution is measured using C++ timing facilities immediately around the algorithm call.
-
-For very fast inputs, repeated runs may be used and the average algorithm time may be reported, provided the number of runs is documented.
+For Gradient Descent, the timer measures only the Gradient Descent algorithm execution.
 
 ---
 
 # Gradient Descent Results
 
-The following are the observed results from the current implementation.
+| Test Case | Degree | Final x | Final f(x) | Iterations | Converged | Execution Time (ms) |
+|---|---:|---:|---:|---:|---|---:|
+| `gd_01.txt` | 2 | 2.9999995063 | 0.0000000000 | 70 | true | 0.0000000000 |
+| `gd_02.txt` | 4 | 0.0000002379 | 0.0000000000 | 180 | true | 0.0000000000 |
+| `gd_03.txt` | 6 | 0.0000004835 | 0.0000000000 | 349 | true | 0.0000000000 |
+| `gd_04.txt` | 8 | 0.0000000050 | 0.0000000000 | 948 | true | 0.0000000000 |
+| `gd_05.txt` | 10 | 0.0000000000 | 0.0000000000 | 2364 | true | 0.0000000000 |
 
-| Mode | Test File | Input Type | Input Size | Expected Output | Actual Output | Algorithm Time |
-|---|---|---|---|---|---|---:|
-| Double | `gd_01.txt` | Polynomial | Degree 2 | x* = 3 | x = 2.9999995063, f(x) = 0.0000000000, Iterations = 70, Converged = true | 0.0000000000 ms |
-| Double | `gd_02.txt` | Polynomial | Degree 4 | x* = 0 | x = 0.0000002379, f(x) = 0.0000000000, Iterations = 180, Converged = true | 0.0000000000 ms |
-| Double | `gd_03.txt` | Polynomial | Degree 6 | x* = 0 | x = 0.0000004835, f(x) = 0.0000000000, Iterations = 349, Converged = true | 0.0000000000 ms |
-| Double | `gd_04.txt` | Polynomial | Degree 8 | x* = 0 | x = 0.0000000050, f(x) = 0.0000000000, Iterations = 948, Converged = true | 0.0000000000 ms |
-| Double | `gd_05.txt` | Polynomial | Degree 10 | x* = 0 | x = 0.0000000000, f(x) = 0.0000000000, Iterations = 2364, Converged = true | 0.0000000000 ms |
-
-All five required Gradient Descent tests converged successfully.
+All five Gradient Descent tests converged successfully.
 
 ---
 
 # Maxflow-Mincut Results
 
-The following results were obtained from the current implementation.
+| Test Case | Vertices | Edges | Maximum Flow | Minimum Cut Capacity | Execution Time (ms) |
+|---|---:|---:|---:|---:|---:|
+| `maxflow_10.txt` | 10 | 10 | 23 | 23 | 0.000 |
+| `maxflow_100.txt` | 100 | 196 | 20 | 20 | 4.028 |
+| `maxflow_1000.txt` | 1,000 | 1,996 | 20 | 20 | 0.000 |
+| `maxflow_10000.txt` | 10,000 | 19,996 | 20 | 20 | 2.502 |
+| `maxflow_50000.txt` | 50,000 | 99,996 | 20 | 20 | 19.891 |
 
-| Mode | Test File | Input Type | Input Size | Expected Output | Actual Output | Algorithm Time |
-|---|---|---|---|---|---|---:|
-| Double | `maxflow_10.txt` | Directed adjacency list converted to CSR | V = 10, E = 10 | Maximum flow = minimum cut capacity | Maximum flow = 23, Minimum cut capacity = 23 | 0.017 ms |
-| Double | `maxflow_100.txt` | Directed adjacency list converted to CSR | V = 100, E = 196 | Maximum flow = minimum cut capacity | Maximum flow = 20, Minimum cut capacity = 20 | 0.083 ms |
-| Double | `maxflow_1000.txt` | Directed adjacency list converted to CSR | V = 1,000, E = 1,996 | Maximum flow = minimum cut capacity | Maximum flow = 20, Minimum cut capacity = 20 | 0.313 ms |
-| Double | `maxflow_10000.txt` | Directed adjacency list converted to CSR | V = 10,000, E = 19,996 | Maximum flow = minimum cut capacity | Maximum flow = 20, Minimum cut capacity = 20 | 0.313 ms |
-| Double | `maxflow_50000.txt` | Directed adjacency list converted to CSR | V = 50,000, E = 99,996 | Maximum flow = minimum cut capacity | Maximum flow = 20, Minimum cut capacity = 20 | 10.892 ms |
+For every completed Maxflow-Mincut test:
 
-All five Maxflow-Mincut tests satisfy:
+    Maximum Flow = Minimum Cut Capacity
 
-```text
-Maximum Flow = Minimum Cut Capacity
-```
+Therefore, the max-flow/min-cut correctness condition is satisfied for all completed tests.
 
 ---
 
-# Correctness Verification
+# Correctness Checks
 
 ## Gradient Descent
 
-| Test File | Expected x* | Actual x | Converged | Status |
-|---|---:|---:|---|---|
-| `gd_01.txt` | 3 | 2.9999995063 | true | PASS |
-| `gd_02.txt` | 0 | 0.0000002379 | true | PASS |
-| `gd_03.txt` | 0 | 0.0000004835 | true | PASS |
-| `gd_04.txt` | 0 | 0.0000000050 | true | PASS |
-| `gd_05.txt` | 0 | 0.0000000000 | true | PASS |
+The following are checked:
+
+- expected minimum
+- final value of `x`
+- final function value
+- convergence status
+- maximum iteration limit
+
+All five required Gradient Descent tests converged successfully.
+
+---
 
 ## Maxflow-Mincut
 
-| Test File | Maximum Flow | Minimum Cut Capacity | Status |
+The maximum-flow/minimum-cut condition is checked:
+
+    Maximum Flow = Minimum Cut Capacity
+
+| Test Case | Maximum Flow | Minimum Cut Capacity | Status |
 |---|---:|---:|---|
 | `maxflow_10.txt` | 23 | 23 | PASS |
 | `maxflow_100.txt` | 20 | 20 | PASS |
@@ -477,140 +356,49 @@ Maximum Flow = Minimum Cut Capacity
 
 ## Gradient Descent
 
-For a polynomial of degree `d`, polynomial and derivative evaluation require:
+For polynomial degree `d` and `I` iterations:
 
-```text
-O(d)
-```
+    Time Complexity: O(d × I)
 
-work per iteration.
+Space complexity:
 
-For `I` iterations, the total algorithm complexity is:
+    O(d)
 
-```text
-O(d * I)
-```
-
-The coefficient array requires:
-
-```text
-O(d)
-```
-
-space.
+---
 
 ## Maxflow-Mincut
 
-Dinic's algorithm is used for maximum flow.
+The implementation uses Dinic's algorithm.
 
-For a general directed graph, the worst-case complexity is:
+The general worst-case complexity is:
 
-```text
-O(V^2 * E)
-```
+    O(V²E)
 
-where:
+Practical performance depends on graph structure and capacities.
 
-- `V` = number of vertices.
-- `E` = number of directed edges.
-
-Practical execution time depends on graph structure and the residual network.
+---
 
 ## CSR Conversion
 
-For a graph with `V` vertices and `E` stored adjacency entries, adjacency-list-to-CSR conversion requires:
+CSR construction is preprocessing.
 
-```text
-O(V + E)
-```
+Its complexity is:
 
-time.
+    O(V + E)
 
-CSR conversion is preprocessing and is excluded from the reported algorithm execution time.
+CSR conversion is excluded from the reported algorithm execution time.
 
 ---
 
-# Result Summary
+# Assignment 3 Observations
 
-## Gradient Descent
+- Gradient Descent supports polynomial degrees 2, 4, 6, 8 and 10.
+- All five Gradient Descent tests converged successfully.
+- Maxflow-Mincut uses Dinic's algorithm.
+- Maxflow-Mincut uses CSR after the input graph has been prepared.
+- CSR conversion is outside the timed region.
+- All five completed Maxflow-Mincut tests satisfy Maximum Flow = Minimum Cut Capacity.
+- The largest completed Maxflow-Mincut test contains 50,000 vertices.
+- The latest recorded execution time for `maxflow_50000.txt` is 19.891 ms.
+- The current Gradient Descent runs report extremely small execution times of 0.0000000000 ms.
 
-| Test | Status | Iterations | Execution Time |
-|---|---|---:|---:|
-| `gd_01.txt` | PASS | 70 | 0.0000000000 ms |
-| `gd_02.txt` | PASS | 180 | 0.0000000000 ms |
-| `gd_03.txt` | PASS | 349 | 0.0000000000 ms |
-| `gd_04.txt` | PASS | 948 | 0.0000000000 ms |
-| `gd_05.txt` | PASS | 2364 | 0.0000000000 ms |
-
-## Maxflow-Mincut
-
-| Test | Vertices | Edges | Maximum Flow | Minimum Cut Capacity | Execution Time | Status |
-|---|---:|---:|---:|---:|---:|---|
-| `maxflow_10.txt` | 10 | 10 | 23 | 23 | 0.017 ms | PASS |
-| `maxflow_100.txt` | 100 | 196 | 20 | 20 | 0.083 ms | PASS |
-| `maxflow_1000.txt` | 1,000 | 1,996 | 20 | 20 | 0.313 ms | PASS |
-| `maxflow_10000.txt` | 10,000 | 19,996 | 20 | 20 | 0.313 ms | PASS |
-| `maxflow_50000.txt` | 50,000 | 99,996 | 20 | 20 | 10.892 ms | PASS |
-
----
-
-# Test File Naming Convention
-
-## Gradient Descent
-
-```text
-gd_01.txt
-gd_02.txt
-gd_03.txt
-gd_04.txt
-gd_05.txt
-```
-
-## Maxflow-Mincut
-
-```text
-maxflow_10.txt
-maxflow_100.txt
-maxflow_1000.txt
-maxflow_10000.txt
-maxflow_50000.txt
-```
-
-Optional:
-
-```text
-maxflow_100000.txt
-```
-
----
-
-# Timing Observations
-
-## Gradient Descent
-
-The current Gradient Descent tests are extremely fast and report:
-
-```text
-0.0000000000 ms
-```
-
-for all five tests.
-
-## Maxflow-Mincut
-
-| Test File | Execution Time |
-|---|---:|
-| `maxflow_10.txt` | 0.017 ms |
-| `maxflow_100.txt` | 0.083 ms |
-| `maxflow_1000.txt` | 0.313 ms |
-| `maxflow_10000.txt` | 0.313 ms |
-| `maxflow_50000.txt` | 10.892 ms |
-
----
-
-# References
-
-- CS509 Assignment 3 Specification.
-- CS509 Lab Work Guidelines.
-- CS509 Assignment 1 Guidelines and Repository Conventions.
-- CS509 Assignment 2 Guidelines and Repository Conventions.
