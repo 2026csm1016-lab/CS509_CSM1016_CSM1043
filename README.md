@@ -15,12 +15,13 @@ MST (Kruskal and Prim) is an individual task in the Assignment 3 specification a
 
 ## Buddy Details
 
+| Entry Number | Role |
+|---|---|
+| CSM1016 | Harshita  |
+| CSM1043 | Sejal     |
+
 | Field | Information |
 |---|---|
-| Student | Harshita Mahor |
-| Entry Number | 2026CSM1016 |
-| Buddy | Sejal |
-| Buddy Entry Number | 2026CSM1043 |
 | Assignment | CS509 Assignment 3 |
 | Mode | Double / Buddy |
 | Language | C++ |
