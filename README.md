@@ -8,8 +8,8 @@ This repository contains the Double / Buddy work for CS509 Assignment 3.
 
 | Entry Number | Role |
 |---|---|
-| CSM1016 | Buddy Member |
-| CSM1043 | Buddy Member |
+| CSM1016 | Harshita  |
+| CSM1043 | Sejal     |
 
 ### Assignment 3 Buddy Algorithms
 
@@ -614,3 +614,101 @@ for all five tests.
 - CS509 Lab Work Guidelines.
 - CS509 Assignment 1 Guidelines and Repository Conventions.
 - CS509 Assignment 2 Guidelines and Repository Conventions.
+# CS509 Assignment 4 - Buddy Task
+
+## Buddy Algorithms
+
+- K-Means Clustering
+- FastMap
+
+This folder is the Buddy portion of Assignment 4. The Individual portion
+(Vertex Coloring and PageRank) is separate.
+
+## Structure
+
+```text
+assignment_04/
+├── src/
+│   ├── kmeans.h
+│   ├── kmeans.cpp
+│   ├── fastmap.h
+│   └── fastmap.cpp
+├── driver/
+│   └── assignment4_buddy.cpp
+└── tests/
+    ├── km_01.txt
+    ├── km_02.txt
+    ├── km_03.txt
+    ├── km_04.txt
+    ├── fm_01.txt
+    ├── fm_02.txt
+    ├── fm_03.txt
+    └── fm_04.txt
+```
+
+## Compile
+
+From the repository root:
+
+```bash
+g++ -std=c++17 -O2 assignment_04/src/kmeans.cpp assignment_04/src/fastmap.cpp assignment_04/driver/assignment4_buddy.cpp -o assignment4_buddy.exe
+```
+
+## Run K-Means
+
+```bash
+.ssignment4_buddy.exe kmeans assignment_04/tests/km_01.txt
+```
+
+Similarly:
+
+```bash
+.ssignment4_buddy.exe kmeans assignment_04/tests/km_02.txt
+.ssignment4_buddy.exe kmeans assignment_04/tests/km_03.txt
+.ssignment4_buddy.exe kmeans assignment_04/tests/km_04.txt
+```
+
+## Run FastMap
+
+```bash
+.ssignment4_buddy.exe fastmap assignment_04/tests/fm_01.txt
+```
+
+Similarly:
+
+```bash
+.ssignment4_buddy.exe fastmap assignment_04/tests/fm_02.txt
+.ssignment4_buddy.exe fastmap assignment_04/tests/fm_03.txt
+.ssignment4_buddy.exe fastmap assignment_04/tests/fm_04.txt
+```
+
+## Timing
+
+The driver starts timing immediately before calling the algorithm and stops
+immediately after it returns. Input reading and validation are outside the
+timed region.
+
+For K-Means, assignment and centroid-update steps for all iterations are
+inside the timed region.
+
+For FastMap, pivot selection, projection, and distance deflation for all
+target dimensions are inside the timed region.
+
+## K-Means
+
+The implementation initializes the first K input points as centroids, assigns
+each point to the nearest centroid, updates centroids by their cluster means,
+and repeats until assignments stop changing, centroid shift is within
+tolerance, or MAX_ITERATIONS is reached.
+
+Empty clusters retain their previous centroid for that iteration.
+
+## FastMap
+
+The implementation uses the required farthest-object heuristic: start from
+object 0, find a farthest object, then find an object farthest from that
+object. Each dimension uses the law-of-cosines projection followed by
+distance deflation.
+
+The pivot strategy is deterministic by starting the heuristic from object 0,
+which makes local runs reproducible.
