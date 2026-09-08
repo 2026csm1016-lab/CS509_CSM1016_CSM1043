@@ -508,13 +508,16 @@ This folder is the Buddy portion of Assignment 4. The Individual portion
 
 ```text
 assignment_04/
+
 ├── src/
 │   ├── kmeans.h
 │   ├── kmeans.cpp
 │   ├── fastmap.h
 │   └── fastmap.cpp
+
 ├── driver/
 │   └── assignment4_buddy.cpp
+
 └── tests/
     ├── km_01.txt
     ├── km_02.txt
@@ -537,29 +540,47 @@ g++ -std=c++17 -O2 assignment_04/src/kmeans.cpp assignment_04/src/fastmap.cpp as
 ## Run K-Means
 
 ```bash
-.ssignment4_buddy.exe kmeans assignment_04/tests/km_01.txt
+./assignment4_buddy.exe kmeans assignment_04/tests/km_01.txt
 ```
 
 Similarly:
 
 ```bash
-.ssignment4_buddy.exe kmeans assignment_04/tests/km_02.txt
-.ssignment4_buddy.exe kmeans assignment_04/tests/km_03.txt
-.ssignment4_buddy.exe kmeans assignment_04/tests/km_04.txt
+./assignment4_buddy.exe kmeans assignment_04/tests/km_02.txt
+./assignment4_buddy.exe kmeans assignment_04/tests/km_03.txt
+./assignment4_buddy.exe kmeans assignment_04/tests/km_04.txt
+```
+
+### Windows PowerShell
+
+```powershell
+.\assignment4_buddy.exe kmeans assignment_04/tests/km_01.txt
+.\assignment4_buddy.exe kmeans assignment_04/tests/km_02.txt
+.\assignment4_buddy.exe kmeans assignment_04/tests/km_03.txt
+.\assignment4_buddy.exe kmeans assignment_04/tests/km_04.txt
 ```
 
 ## Run FastMap
 
 ```bash
-.ssignment4_buddy.exe fastmap assignment_04/tests/fm_01.txt
+./assignment4_buddy.exe fastmap assignment_04/tests/fm_01.txt
 ```
 
 Similarly:
 
 ```bash
-.ssignment4_buddy.exe fastmap assignment_04/tests/fm_02.txt
-.ssignment4_buddy.exe fastmap assignment_04/tests/fm_03.txt
-.ssignment4_buddy.exe fastmap assignment_04/tests/fm_04.txt
+./assignment4_buddy.exe fastmap assignment_04/tests/fm_02.txt
+./assignment4_buddy.exe fastmap assignment_04/tests/fm_03.txt
+./assignment4_buddy.exe fastmap assignment_04/tests/fm_04.txt
+```
+
+### Windows PowerShell
+
+```powershell
+.\assignment4_buddy.exe fastmap assignment_04/tests/fm_01.txt
+.\assignment4_buddy.exe fastmap assignment_04/tests/fm_02.txt
+.\assignment4_buddy.exe fastmap assignment_04/tests/fm_03.txt
+.\assignment4_buddy.exe fastmap assignment_04/tests/fm_04.txt
 ```
 
 ## Timing
