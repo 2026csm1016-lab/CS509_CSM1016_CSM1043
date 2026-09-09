@@ -4,10 +4,15 @@
 
 using namespace std;
 
+#ifdef _WIN32
+const string EXEC_PREFIX = ".\\";
+#else
+const string EXEC_PREFIX = "./";
+#endif
 
 // ============================================================
 // ASSIGNMENT 3 - BUDDY
-// Kruskal MST + Prim MST
+// Gradient Descent + Maxflow-Mincut
 // ============================================================
 
 int compileAssignment3()
@@ -15,32 +20,21 @@ int compileAssignment3()
     const string command =
         "g++ -std=c++17 -O2 "
         "assignment_03/src/csr.cpp "
-        "assignment_03/src/kruskal.cpp "
-        "assignment_03/src/prim.cpp "
+        "assignment_03/src/gradient_descent.cpp "
+        "assignment_03/src/maxflow.cpp "
         "assignment_03/driver/assignment3_driver.cpp "
         "-o assignment_03.exe";
 
-    const int status = system(command.c_str());
-
-    if (status != 0)
-    {
-        cerr << "Error: Assignment 3 compilation failed.\n";
-        return 1;
-    }
-
-    return 0;
+    return system(command.c_str()) == 0 ? 0 : 1;
 }
 
-int runAssignment3(
-    const string& algorithm,
-    const string& file)
+int runAssignment3(const string& algorithm, const string& file)
 {
     const string command =
-        "assignment_03.exe " + algorithm + " \"" + file + "\"";
+        EXEC_PREFIX + "assignment_03.exe " + algorithm + " \"" + file + "\"";
 
     return system(command.c_str());
 }
-
 
 // ============================================================
 // ASSIGNMENT 4 - BUDDY
@@ -56,30 +50,19 @@ int compileAssignment4()
         "assignment_04/driver/assignment4_buddy.cpp "
         "-o assignment_04.exe";
 
-    const int status = system(command.c_str());
-
-    if (status != 0)
-    {
-        cerr << "Error: Assignment 4 compilation failed.\n";
-        return 1;
-    }
-
-    return 0;
+    return system(command.c_str()) == 0 ? 0 : 1;
 }
 
-int runAssignment4(
-    const string& algorithm,
-    const string& file)
+int runAssignment4(const string& algorithm, const string& file)
 {
     const string command =
-        "assignment_04.exe " + algorithm + " \"" + file + "\"";
+        EXEC_PREFIX + "assignment_04.exe " + algorithm + " \"" + file + "\"";
 
     return system(command.c_str());
 }
 
-
 // ============================================================
-// MAIN MENU
+// MENUS
 // ============================================================
 
 void printMainMenu()
@@ -87,54 +70,44 @@ void printMainMenu()
     cout << "\n=====================================\n";
     cout << "       CS509 Buddy Assignments\n";
     cout << "=====================================\n";
-    cout << "1. Assignment 3 - Buddy\n";
-    cout << "2. Assignment 4 - Buddy\n";
+    cout << "1. Assignment 3\n";
+    cout << "2. Assignment 4\n";
     cout << "0. Exit\n";
     cout << "\nEnter your choice: ";
 }
 
-
-// ============================================================
-// ASSIGNMENT 3 MENUS
-// ============================================================
-
 void printAssignment3Menu()
 {
     cout << "\n========== Assignment 3 Buddy ==========\n";
-    cout << "1. Kruskal MST\n";
-    cout << "2. Prim MST\n";
+    cout << "1. Gradient Descent\n";
+    cout << "2. Maxflow-Mincut\n";
     cout << "0. Back\n";
     cout << "\nEnter your choice: ";
 }
 
-void printKruskalMenu()
+void printGradientDescentMenu()
 {
-    cout << "\n============= Kruskal MST =============\n";
-    cout << "1. mst_10.txt\n";
-    cout << "2. mst_100.txt\n";
-    cout << "3. mst_10000.txt\n";
-    cout << "4. mst_50000.txt\n";
-    cout << "5. mst_100000.txt\n";
+    cout << "\n========== Gradient Descent ==========\n";
+    cout << "1. gd_01.txt\n";
+    cout << "2. gd_02.txt\n";
+    cout << "3. gd_03.txt\n";
+    cout << "4. gd_04.txt\n";
+    cout << "5. gd_05.txt\n";
     cout << "0. Back\n";
     cout << "\nEnter your choice: ";
 }
 
-void printPrimMenu()
+void printMaxflowMenu()
 {
-    cout << "\n=============== Prim MST ===============\n";
-    cout << "1. mst_10.txt\n";
-    cout << "2. mst_100.txt\n";
-    cout << "3. mst_10000.txt\n";
-    cout << "4. mst_50000.txt\n";
-    cout << "5. mst_100000.txt\n";
+    cout << "\n========== Maxflow-Mincut ==========\n";
+    cout << "1. maxflow_10.txt\n";
+    cout << "2. maxflow_100.txt\n";
+    cout << "3. maxflow_1000.txt\n";
+    cout << "4. maxflow_10000.txt\n";
+    cout << "5. maxflow_50000.txt\n";
     cout << "0. Back\n";
     cout << "\nEnter your choice: ";
 }
-
-
-// ============================================================
-// ASSIGNMENT 4 MENUS
-// ============================================================
 
 void printAssignment4Menu()
 {
@@ -167,7 +140,6 @@ void printFastMapMenu()
     cout << "\nEnter your choice: ";
 }
 
-
 // ============================================================
 // MAIN
 // ============================================================
@@ -188,15 +160,11 @@ int main()
         }
 
         if (choice == 0)
-        {
             return 0;
-        }
-
 
         // ====================================================
         // ASSIGNMENT 3 - BUDDY
         // ====================================================
-
         if (choice == 1)
         {
             printAssignment3Menu();
@@ -211,16 +179,11 @@ int main()
             }
 
             if (algorithmChoice == 0)
-            {
                 continue;
-            }
-
-
-            // ---------------- KRUSKAL ----------------
 
             if (algorithmChoice == 1)
             {
-                printKruskalMenu();
+                printGradientDescentMenu();
 
                 int testChoice;
                 cin >> testChoice;
@@ -232,39 +195,27 @@ int main()
                 }
 
                 if (testChoice == 0)
-                {
                     continue;
-                }
-
-                const int sizes[] =
-                {
-                    10, 100, 10000, 50000, 100000
-                };
 
                 if (testChoice >= 1 && testChoice <= 5)
                 {
                     const string file =
-                        "assignment_03/tests/mst_" +
-                        to_string(sizes[testChoice - 1]) +
-                        ".txt";
+                        "assignment_03/tests/gd_0" +
+                        to_string(testChoice) + ".txt";
 
                     if (compileAssignment3() == 0)
-                    {
-                        runAssignment3("kruskal", file);
-                    }
+                        runAssignment3("gd", file);
+                    else
+                        cerr << "Error: Assignment 3 compilation failed.\n";
                 }
                 else
                 {
                     cout << "Invalid choice.\n";
                 }
             }
-
-
-            // ---------------- PRIM ----------------
-
             else if (algorithmChoice == 2)
             {
-                printPrimMenu();
+                printMaxflowMenu();
 
                 int testChoice;
                 cin >> testChoice;
@@ -276,44 +227,35 @@ int main()
                 }
 
                 if (testChoice == 0)
-                {
                     continue;
-                }
 
-                const int sizes[] =
-                {
-                    10, 100, 10000, 50000, 100000
-                };
+                const int sizes[] = {10, 100, 1000, 10000, 50000};
 
                 if (testChoice >= 1 && testChoice <= 5)
                 {
                     const string file =
-                        "assignment_03/tests/mst_" +
-                        to_string(sizes[testChoice - 1]) +
-                        ".txt";
+                        "assignment_03/tests/maxflow_" +
+                        to_string(sizes[testChoice - 1]) + ".txt";
 
                     if (compileAssignment3() == 0)
-                    {
-                        runAssignment3("prim", file);
-                    }
+                        runAssignment3("maxflow", file);
+                    else
+                        cerr << "Error: Assignment 3 compilation failed.\n";
                 }
                 else
                 {
                     cout << "Invalid choice.\n";
                 }
             }
-
             else
             {
                 cout << "Invalid choice.\n";
             }
         }
 
-
         // ====================================================
         // ASSIGNMENT 4 - BUDDY
         // ====================================================
-
         else if (choice == 2)
         {
             printAssignment4Menu();
@@ -328,12 +270,7 @@ int main()
             }
 
             if (algorithmChoice == 0)
-            {
                 continue;
-            }
-
-
-            // ---------------- K-MEANS ----------------
 
             if (algorithmChoice == 1)
             {
@@ -349,31 +286,24 @@ int main()
                 }
 
                 if (testChoice == 0)
-                {
                     continue;
-                }
 
                 if (testChoice >= 1 && testChoice <= 4)
                 {
                     const string file =
                         "assignment_04/tests/km_0" +
-                        to_string(testChoice) +
-                        ".txt";
+                        to_string(testChoice) + ".txt";
 
                     if (compileAssignment4() == 0)
-                    {
                         runAssignment4("kmeans", file);
-                    }
+                    else
+                        cerr << "Error: Assignment 4 compilation failed.\n";
                 }
                 else
                 {
                     cout << "Invalid choice.\n";
                 }
             }
-
-
-            // ---------------- FASTMAP ----------------
-
             else if (algorithmChoice == 2)
             {
                 printFastMapMenu();
@@ -388,39 +318,29 @@ int main()
                 }
 
                 if (testChoice == 0)
-                {
                     continue;
-                }
 
                 if (testChoice >= 1 && testChoice <= 4)
                 {
                     const string file =
                         "assignment_04/tests/fm_0" +
-                        to_string(testChoice) +
-                        ".txt";
+                        to_string(testChoice) + ".txt";
 
                     if (compileAssignment4() == 0)
-                    {
                         runAssignment4("fastmap", file);
-                    }
+                    else
+                        cerr << "Error: Assignment 4 compilation failed.\n";
                 }
                 else
                 {
                     cout << "Invalid choice.\n";
                 }
             }
-
             else
             {
                 cout << "Invalid choice.\n";
             }
         }
-
-
-        // ====================================================
-        // INVALID MAIN MENU CHOICE
-        // ====================================================
-
         else
         {
             cout << "Invalid choice.\n";

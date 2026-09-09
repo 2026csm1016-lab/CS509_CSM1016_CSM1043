@@ -583,6 +583,40 @@ Similarly:
 .\assignment4_buddy.exe fastmap assignment_04/tests/fm_04.txt
 ```
 
+
+# Common Wrapper
+
+The common wrapper is:
+
+```text
+common_wrapper/wrapper.cpp
+```
+
+It provides the menu for **both Buddy assignments**.
+
+## Compile Common Wrapper - Linux
+
+```bash
+g++ -std=c++17 -O2 common_wrapper/wrapper.cpp -o wrapper.exe
+```
+
+## Compile Common Wrapper - Windows PowerShell
+
+```powershell
+g++ -std=c++17 -O2 common_wrapper/wrapper.cpp -o wrapper.exe
+```
+
+## Run Common Wrapper - Linux
+
+```bash
+./wrapper.exe
+```
+
+## Run Common Wrapper - Windows PowerShell
+
+```powershell
+.\wrapper.exe
+```
 ## Timing
 
 The driver starts timing immediately before calling the algorithm and stops
