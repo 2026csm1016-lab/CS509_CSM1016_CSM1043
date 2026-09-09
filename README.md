@@ -4,7 +4,7 @@
 
 This repository contains the Buddy/Double work for CS509 Assignment 3.
 
-<<<<<<< HEAD
+
 ### Buddy Members
 
 | Entry Number | Role |
